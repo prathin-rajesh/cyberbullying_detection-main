@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request
 import torch
 import pickle
+import re
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import firebase_admin
 from firebase_admin import credentials, firestore
-from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -34,6 +34,18 @@ def load_profane_words(file_path="profane_words.txt"):
 
 profane_words = load_profane_words()
 
+def censor_word(word):
+    """Censors a profane word by replacing middle characters with asterisks."""
+    if len(word) > 2:
+        return word[0] + "*" * (len(word) - 2) + word[-1]
+    return word  # If the word is too short, keep it the same
+
+def cleanse_text(text):
+    """Replaces profane words with censored versions."""
+    words = text.split()  # Split sentence into words
+    censored_words = [censor_word(word) if word.lower() in profane_words else word for word in words]
+    return " ".join(censored_words)  # Rejoin the words into a sentence
+
 def contains_profanity(text):
     """Returns True if text contains profanity, else False."""
     words = text.lower().split()
@@ -52,15 +64,21 @@ def predict_cyberbullying(text):
     print(f"Model Prediction: {prediction}, Logits: {logits}")  # Debugging output
     return "Cyberbullying" if prediction == 1 else "Not Cyberbullying"
 
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     prediction = None
+    cleansed_text = None  # Store the censored version
+
     if request.method == 'POST':
         user_input = request.form['text']
+
+        # Check for profanity and cleanse if necessary
+        if contains_profanity(user_input):
+            cleansed_text = cleanse_text(user_input)
+
         prediction = predict_cyberbullying(user_input)
-    
-    return render_template('index.html', prediction=prediction)
+
+    return render_template('index.html', prediction=prediction, cleansed_text=cleansed_text)
 
 @app.route('/about')
 def about():
