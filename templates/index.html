@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profanity Detection</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <style>
+      body {
+        font-family: "SF Pro", sans-serif;
+        background: linear-gradient(to bottom, #052a40, #0d5c75);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        height: 100vh;
+        margin: 0;
+        color: white;
+      }
+
+      .container {
+        max-width: 800px;
+        margin-top: 50px;
+      }
+      .static-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #0db9d4;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .form-control {
+        height: 200px;
+        border: 2px solid #28a745;
+        font-size: 1.2rem;
+      }
+      .result {
+        text-align: center;
+        font-size: 24px;
+        margin-top: 20px;
+        color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .analyze {
+        background-color: #0d98ba;
+      }
+      .bullying {
+        background-color: #dc3545;
+      }
+      .non-bullying {
+        background-color: #28a745;
+      }
+      .cleansed-text {
+        background-color: #ffcc00;
+        color: #333;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 18px;
+        text-align: center;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="{{ url_for('index') }}"
+        >Profanity Detection Using TinyBERT</a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('about') }}">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="static-title">Profanity Detection Using TinyBERT</div>
+      <form method="POST">
+        <div class="form-group">
+          <textarea
+            name="text"
+            class="form-control"
+            rows="4"
+            placeholder="Enter text to analyze..."
+            required
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-success btn-block analyze">
+          Analyze
+        </button>
+      </form>
+
+      {% if prediction is not none %}
+      <div
+        class="result {% if prediction == 'Cyberbullying' %}bullying{% else %}non-bullying{% endif %}"
+      >
+        {% if prediction == "Cyberbullying" %} Profane words detected! {% else
+        %} No profane words detected. {% endif %}
+      </div>
+      {% endif %} {% if cleansed_text and prediction == "Cyberbullying" %}
+      <div class="cleansed-text">
+        <strong>Cleansed Text:</strong> {{ cleansed_text }}
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

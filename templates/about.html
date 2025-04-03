@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About - Profanity Detection</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <style>
+      body {
+        font-family: "SF Pro", sans-serif;
+        background: linear-gradient(to bottom, #052a40, #0d5c75);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        height: 100vh;
+        margin: 0;
+        color: white;
+      }
+      .container {
+        max-width: 800px;
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="{{ url_for('index') }}"
+        >Cyberbullying Detection</a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('about') }}">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <h2 class="text-center">About Our Project</h2>
+      <p class="mt-4">This project aims to detect <strong>profane words</strong> in text using deep learning.
+        It is built with <strong>Flask </strong>for the backend and <strong>Firebase</strong> for storing the details of users to give their feedback. We integrated <strong>TinyBERT</strong>
+        model to classify text as "Profane word detected" or "Profane word not detected". 
+        The interface is designed using Bootstrap, ensuring a responsive and user-friendly
+        experience.</p>
+
+      <hr color="white">
+
+      <h5 style="text-decoration: underline;">About TinyBERT</h5>
+
+      <p class="mt-4">
+        <strong>TinyBERT</strong> is a lightweight, distilled version of BERT
+        designed for NLP tasks, offering efficient text understanding with
+        reduced computational cost while maintaining strong performance in
+        various classification problems, including profanity detection. The advantages of TinyBERT are mentioned below
+
+        <p><strong>Less
+        Overfitting</strong> – Unlike Decision Trees and Logistic Regression, which may
+        overfit on complex textual data, TinyBERT generalizes better by learning
+        deep contextual representations.</p>
+
+        <p><strong>Contextual Understanding</strong> - Unlike
+        TF-IDF and Multinomial Naïve Bayes, which rely on word frequency,
+        TinyBERT captures word meanings and relationships in context.</p>
+
+        <p><strong>Higher
+        Accuracy</strong> - Traditional models like Logistic Regression and Decision
+        Trees struggle with complex language, while TinyBERT excels in nuanced
+        text classification.</p> 
+
+        <p><strong>Efficient for Large Datasets</strong> – Unlike
+        TF-IDF-based approaches, which scale poorly with vocabulary size,
+        TinyBERT efficiently processes large datasets with fewer computational
+        resources.</p> 
+      </p>
+      <hr color="white">
+      <p>
+        Our goal is to help create a safer online environment by providing an
+        easy-to-use tool for analyzing text content.
+      </p>
+      <p>
+        Done by <strong>R. Pratin, M. Ramanathan and S. Vigneshwaran</strong>
+      </p>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
